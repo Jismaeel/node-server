@@ -1,49 +1,51 @@
+
+
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = 3000;
 
-// Configure body parser middleware to parse POST request bodies
-app.use(bodyParser.urlencoded({ extended: true }));
+// Middleware
+app.use(cors());
 app.use(bodyParser.json());
 
-// Create a Nodemailer transporter using Gmail SMTP
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'jansenismaeel89@gmail.com', // your Gmail email address
-    pass: 'Liverpool77#' // your Gmail password or application-specific password
-  }
-});
-
-// Handle POST request to send email
+// Endpoint to handle form submission
 app.post('/send-email', (req, res) => {
-  const { name, email, subject, message } = req.body;
+    const { name, email, message } = req.body;
 
-  // Set up email data
-  const mailOptions = {
-    from: email,
-    to: 'infoatijdesigns@gamil.com', // Change this to your recipient email
-    subject: subject,
-    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
-  };
+    // Create a transporter with Gmail SMTP
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'jansenismaeel89@gmail.com', // Sender's Gmail address
+            pass: 'Liverpool77#' // Sender's Gmail password
+        }
+    });
 
-  // Send email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error(error);
-      res.status(500).send('Error sending email');
-    } else {
-      console.log('Email sent: ' + info.response);
-      res.sendStatus(200);
-    }
-  });
+    // Mail options
+    const mailOptions = {
+        from: 'jansenismaeel89@gmail.com', // Sender's email address
+        to: 'infoatijdesigns@gmail.com', // Recipient's email address
+        subject: 'New Message from Contact Form',
+        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            res.status(500).send('Error sending email');
+        } else {
+            console.log('Email sent: ' + info.response);
+            res.send('Email sent successfully');
+        }
+    });
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Start server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });
-
