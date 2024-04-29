@@ -12,6 +12,11 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
+// CORS configuration
+app.use(cors({
+  origin: 'https://msdsa-sever.glitch.me/' // Replace with your actual domain
+}));
+
 // Endpoint to handle form submission
 app.post('/send-email', (req, res) => {
     const { name, email, message } = req.body;
