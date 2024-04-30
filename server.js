@@ -15,8 +15,6 @@ app.use(bodyParser.json());
 app.use(
   cors({
     origin: "https://themitchellsplaindrivingschoolassociation.site",
-    origin: "https://themitchellsplaindrivingschoolassociation.site/Skylas%20Driving%20School.html",
-    origin: "https://themitchellsplaindrivingschoolassociation.site"
   })
 );
 
