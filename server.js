@@ -23,12 +23,12 @@ app.post("/send-email", (req, res) => {
 
   // Create a transporter with Gmail SMTP
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
+    host: 'smtp.office365.com',
+  port: 587,
+  secure: false, // true for 465, false for other ports
     auth: {
-      user: "jansenismaeel89@gmail.com", // Sender's Gmail address
-      pass: "Liverpool77#", // Sender's Gmail password
+      user: "ismaeeljansenhotmail.com", // Sender's address
+      pass: "Liverpool77#", // Sender's password
     },
   });
 
