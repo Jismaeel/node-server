@@ -27,7 +27,7 @@ app.post("/send-email", (req, res) => {
   port: 587,
   secure: false, // true for 465, false for other ports
     auth: {
-      user: "ismaeeljansenhotmail.com", // Sender's address
+      user: "ismaeeljansen@hotmail.com", // Sender's address
       pass: "Liverpool77#", // Sender's password
     },
   });
