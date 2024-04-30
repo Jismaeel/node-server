@@ -38,7 +38,7 @@ app.post("/send-email", (req, res) => {
     from: "ismaeeljansen@hotmail.com", // Sender's email address
     to: "infoatijdesigns@gmail.com", // Recipient's email address
     subject: "New Message from Contact Form",
-    text: `n\Name: ${name} \nEmail: ${email}\nMessage: ${message}`,
+    text: `\nName: ${name} \nEmail: ${email}\nMessage: ${message}`,
   };
 
   // Send email
