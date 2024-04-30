@@ -34,7 +34,7 @@ app.post("/send-email", (req, res) => {
 
   // Mail options
   const mailOptions = {
-    from: "jansenismaeel89@gmail.com", // Sender's email address
+    from: "ismaeeljansen@hotmail.com", // Sender's email address
     to: "infoatijdesigns@gmail.com", // Recipient's email address
     subject: "New Message from Contact Form",
     text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
