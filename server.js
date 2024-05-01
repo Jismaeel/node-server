@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 
+
 const app = express();
 const port = 3000;
 
@@ -36,7 +37,7 @@ app.post("/send-email", (req, res) => {
   // Mail options
   const mailOptions = {
     from: "ismaeeljansen@hotmail.com", // Sender's email address
-    to: "infoatijdesigns@gmail.com", // Recipient's email address
+    to: "jansenismaeel89@gmail.com", // Recipient's email address
     subject: "New Message from Contact Form",
     text: `\nName: ${name} \nEmail: ${email}\nMessage: ${message}`,
   };
@@ -48,7 +49,7 @@ app.post("/send-email", (req, res) => {
       res.status(500).send("Error sending email");
     } else {
       console.log("Email sent: " + info.response);
-      res.send("Email sent successfully");
+      res.send("g");
     }
   });
 });
