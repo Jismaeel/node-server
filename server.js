@@ -29,14 +29,14 @@ app.post("/send-email", (req, res) => {
   port: 587,
   secure: false, // true for 465, false for other ports
     auth: {
-      user: "ismaeeljansen@hotmail.com", // Sender's address
+      user: "mpdsa2024@outlook.com", // Sender's address
       pass: "Liverpool77#", // Sender's password
     },
   });
 
   // Mail options
   const mailOptions = {
-    from: "ismaeeljansen@hotmail.com", // Sender's email address
+    from: "mpdsa2024@outlook.com", // Sender's email address
     to: "jansenismaeel89@gmail.com", // Recipient's email address
     subject: "New Message from Contact Form",
     text: `\nName: ${name} \nEmail: ${email}\nMessage: ${message}`,
