@@ -42,17 +42,20 @@ app.post("/send-email", (req, res) => {
     text: `\nName: ${name} \nEmail: ${email}\nMessage: ${message}`,
   };
 
-  // Send email
+  // Send email using nodemailer
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log(error);
-      res.status(500).send("Error sending email");
+        // Show the error alert
+        const alert = document.getElementById('wrong');
+        alert.classList.remove('hidden');
     } else {
-      console.log("Email sent: " + info.response);
-      res.send("g");
+        // Show the success alert
+        const alert = document.getElementById('correct');
+        alert.classList.remove('hidden');
     }
-  });
 });
+});
+
 
 // Start server
 app.listen(port, () => {
