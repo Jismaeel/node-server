@@ -7,7 +7,7 @@ const app = express();
 const port = 3000;
 
 // Middleware to parse incoming request bodies
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // CORS configuration to allow requests from specific origins
