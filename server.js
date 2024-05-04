@@ -1,23 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
-const cors = require("cors");
 
 const app = express();
 const port = 3000;
 
 // Middleware to parse incoming request bodies
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// CORS configuration to allow requests from any origin
-// Middleware
-app.use(cors({
-  origin: ["https://themitchellsplaindrivingschoolassociation.site"]
-}));
 
 // POST route to handle membership form submission
 app.post('/submit-membership-form', (req, res) => {
+    // Set CORS headers
+    res.setHeader('Access-Control-Allow-Origin', 'https://themitchellsplaindrivingschoolassociation.site/');
+
     // Extract membership form data
     const { name, surname, email, Drivingschool, phone, area } = req.body;
 
@@ -61,6 +57,9 @@ app.post('/submit-membership-form', (req, res) => {
 
 // POST route to handle contact form submission
 app.post('/submit-contact-form', (req, res) => {
+    // Set CORS headers
+    res.setHeader('Access-Control-Allow-Origin', 'https://themitchellsplaindrivingschoolassociation.site/');
+
     // Extract contact form data
     const { name, email, message } = req.body;
 
