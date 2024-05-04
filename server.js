@@ -4,14 +4,16 @@ const nodemailer = require('nodemailer');
 const cors = require("cors");
 
 const app = express();
-const port = 4000;
+const port = 3000;
 
 // Middleware to parse incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // CORS configuration to allow requests from any origin
-app.use(cors());
+app.use(cors({
+  origin: ["https://themitchellsplaindrivingschoolassociation.site/"]
+}));
 
 // POST route to handle membership form submission
 app.post('/submit-membership-form', (req, res) => {
