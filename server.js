@@ -11,8 +11,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // CORS configuration to allow requests from any origin
+// Middleware
 app.use(cors({
-  origin: ["https://themitchellsplaindrivingschoolassociation.site/"]
+  origin: ["https://themitchellsplaindrivingschoolassociation.site"]
 }));
 
 // POST route to handle membership form submission
