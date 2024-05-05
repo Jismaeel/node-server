@@ -1,10 +1,10 @@
 const express = require('express');
+const cors = require("cors");
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
-const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware to parse incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 // CORS configuration to allow requests from specific origins
 app.use(cors({
-  origin: 'https://themitchellsplaindrivingschoolassociation.site'
+    origin: ["https://themitchellsplaindrivingschoolassociation.site"]
 }));
 
 // POST route to handle membership form submission
@@ -26,14 +26,14 @@ app.post('/submit-membership-form', (req, res) => {
         port: 587,
         secure: false,
         auth: {
-            user: "mpdsa2024@outlook.com", // Sender's address
-            pass: "Liverpool77#", // Sender's password
+            user: process.env.EMAIL_USER, // Sender's address
+            pass: process.env.EMAIL_PASS, // Sender's password
         },
     });
 
     // Email content for membership form
     let mailOptions = {
-        from: "mpdsa2024@outlook.com",
+        from: process.env.EMAIL_USER,
         to: "infoatijdesigns@gmail.com",
         subject: 'Membership Application',
         html: `
@@ -69,14 +69,14 @@ app.post('/submit-contact-form', (req, res) => {
         port: 587,
         secure: false,
         auth: {
-            user: "mpdsa2024@outlook.com", // Sender's address
-            pass: "Liverpool77#", // Sender's password
+            user: process.env.EMAIL_USER, // Sender's address
+            pass: process.env.EMAIL_PASS, // Sender's password
         },
     });
 
     // Email content for contact form
     let mailOptions = {
-        from: "mpdsa2024@outlook.com",
+        from: process.env.EMAIL_USER,
         to: "infoatijdesigns@gmail.com",
         subject: 'New Message from Contact Form',
         html: `
@@ -96,6 +96,16 @@ app.post('/submit-contact-form', (req, res) => {
             res.status(200).json({ message: 'Email sent successfully' });
         }
     });
+});
+
+// Error handler for CORS issues
+app.use((err, req, res, next) => {
+    if (err.name === 'CorsError') {
+        console.error('CORS Error:', err.message);
+        res.status(500).json({ error: 'CORS Error' });
+    } else {
+        next(err);
+    }
 });
 
 // Start the server
