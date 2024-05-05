@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 // CORS middleware
 app.use(cors({
-    origin: ["https://themitchellsplaindrivingschoolassociation.site", "null"]
+    origin: ["https://themitchellsplaindrivingschoolassociation.site","null"]
 }));
 
 // Body parsing middleware
@@ -29,9 +29,14 @@ let transporter = nodemailer.createTransport({
 app.post('/send-email', (req, res) => {
     const { to, subject, text } = req.body;
 
+    // Ensure that the 'to' field is not empty
+    if (!to) {
+        return res.status(400).json({ error: 'Recipient email address is required.' });
+    }
+
     // Email content
     let mailOptions = {
-        from: process.env.EMAIL_USER, // Use the sender's email address from environment variable
+        from: process.env.EMAIL_USER,
         to: to,
         subject: subject,
         text: text
