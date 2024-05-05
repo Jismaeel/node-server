@@ -1,38 +1,33 @@
 const express = require('express');
-const cors = require("cors");
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware to parse incoming request bodies
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-// CORS configuration to allow requests from specific origins
 app.use(cors({
     origin: ["https://themitchellsplaindrivingschoolassociation.site"]
 }));
 
-// POST route to handle membership form submission
+// Routes
 app.post('/submit-membership-form', (req, res) => {
-    // Extract membership form data
     const { name, surname, email, Drivingschool, phone, area } = req.body;
 
-    // Create a transporter with Gmail SMTP
     const transporter = nodemailer.createTransport({
         host: 'smtp.office365.com',
         port: 587,
         secure: false,
         auth: {
-            user: process.env.EMAIL_USER, // Sender's address
-            pass: process.env.EMAIL_PASS, // Sender's password
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
         },
     });
 
-    // Email content for membership form
-    let mailOptions = {
+    const mailOptions = {
         from: process.env.EMAIL_USER,
         to: "infoatijdesigns@gmail.com",
         subject: 'Membership Application',
@@ -46,7 +41,6 @@ app.post('/submit-membership-form', (req, res) => {
         `
     };
 
-    // Send mail for membership form
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error('Error sending email:', error);
@@ -58,24 +52,20 @@ app.post('/submit-membership-form', (req, res) => {
     });
 });
 
-// POST route to handle contact form submission
 app.post('/submit-contact-form', (req, res) => {
-    // Extract contact form data
     const { name, email, message } = req.body;
 
-    // Create a transporter with Gmail SMTP
     const transporter = nodemailer.createTransport({
         host: 'smtp.office365.com',
         port: 587,
         secure: false,
         auth: {
-            user: process.env.EMAIL_USER, // Sender's address
-            pass: process.env.EMAIL_PASS, // Sender's password
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
         },
     });
 
-    // Email content for contact form
-    let mailOptions = {
+    const mailOptions = {
         from: process.env.EMAIL_USER,
         to: "infoatijdesigns@gmail.com",
         subject: 'New Message from Contact Form',
@@ -86,7 +76,6 @@ app.post('/submit-contact-form', (req, res) => {
         `
     };
 
-    // Send mail for contact form
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error('Error sending email:', error);
@@ -98,14 +87,10 @@ app.post('/submit-contact-form', (req, res) => {
     });
 });
 
-// Error handler for CORS issues
+// Error handling middleware
 app.use((err, req, res, next) => {
-    if (err.name === 'CorsError') {
-        console.error('CORS Error:', err.message);
-        res.status(500).json({ error: 'CORS Error' });
-    } else {
-        next(err);
-    }
+    console.error('Internal server error:', err);
+    res.status(500).json({ error: 'Internal server error' });
 });
 
 // Start the server
