@@ -1,20 +1,19 @@
+// server.js
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = 3000;
 
-// CORS middleware
+// Middleware
 app.use(cors({
-    origin: ["https://themitchellsplaindrivingschoolassociation.site", "null"] // Removed quotes around "null"
+    origin: ["https://themitchellsplaindrivingschoolassociation.site", "null"] 
 }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Body parsing middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Nodemailer transporter setup for Outlook
+// Create a nodemailer transporter using Outlook SMTP settings
 let transporter = nodemailer.createTransport({
     host: 'smtp-mail.outlook.com',
     port: 587,
@@ -25,31 +24,38 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-// Route to handle POST request to send email
-app.post('/send-email', (req, res) => {
-    const { to, subject, text } = req.body; // Assuming your request body contains these fields
 
-    // Email content
+// Route to handle email sending
+app.post('/send-email', (req, res) => {
+    const { name, email, message } = req.body;
+
+    // Define email options
     const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to,
-        subject,
-        text
+        from: 'user: process.env.EMAIL_USER', // Update with your Outlook email
+        to: 'infoatijdesigns@gmail.com', // Update with recipient email
+        subject: 'Message from Contact Form',
+        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
     };
 
-    // Send the email
+    // Send email
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            console.error('Error sending email:', error);
-            res.status(500).json({ error: 'Error sending email' });
+            console.error('Error occurred:', error);
+            res.status(500).send('Error sending email');
         } else {
             console.log('Email sent:', info.response);
-            res.status(200).json({ message: 'Email sent successfully' });
+            res.send('Email sent successfully');
         }
     });
 });
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// Export the app
+module.exports = app;
+
+// Start the server if not used as a module
+if (!module.parent) {
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
+}
+
