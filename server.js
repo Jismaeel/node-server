@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 // CORS middleware
 app.use(cors({
-    origin: ["https://themitchellsplaindrivingschoolassociation.site", null] // Removed quotes around "null"
+    origin: ["https://themitchellsplaindrivingschoolassociation.site", "null"] // Removed quotes around "null"
 }));
 
 // Body parsing middleware
