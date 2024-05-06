@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "babel": "babel-node server.js"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +19,14 @@
     "express": "^4.19.2",
     "express-validator": "^7.0.1",
     "nodemailer": "^6.9.13"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.24.5",
+    "@babel/core": "^7.24.5",
+    "@babel/preset-env": "^7.24.5"
   }
 }
+
+
+  
+
