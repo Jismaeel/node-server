@@ -16,7 +16,7 @@ app.use(
   })
 );
 // Endpoint to handle form submission
-app.post("/send-membership-email", (req, res) => {
+app.post("/send-email", (req, res) => {
   const { name, surname, email, Drivingschool, phone, area } = req.body;
   // Create a transporter with Gmail SMTP
   const transporter = nodemailer.createTransport({
