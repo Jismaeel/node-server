@@ -1,14 +1,13 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-const { body, validationResult } = require('express-validator');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // CORS middleware
 app.use(cors({
-    origin: ["https://themitchellsplaindrivingschoolassociation.site"]
+    origin: ["https://themitchellsplaindrivingschoolassociation.site","null"]
 }));
 
 // Body parsing middleware
@@ -26,40 +25,33 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-// Validation middleware
-const validateEmail = [
-    body('to').isEmail().normalizeEmail(),
-    body('subject').isString().trim().notEmpty(),
-    body('text').isString().trim().notEmpty()
-];
-
 // Route to handle POST request to send email
-app.post('/send-email', validateEmail, async (req, res) => {
-    // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
+app.post('/send-email', (req, res) => {
     const { to, subject, text } = req.body;
 
-    try {
-        // Email content
-        let mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: to,
-            subject: subject,
-            text: text
-        };
-
-        // Send the email
-        const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent:', info.response);
-        res.status(200).json({ message: 'Email sent successfully.' });
-    } catch (error) {
-        console.error('Error occurred:', error);
-        res.status(500).json({ error: 'An error occurred while sending the email.' });
+    // Ensure that the 'to' field is not empty
+    if (!to) {
+        return res.status(400).json({ error: 'Recipient email address is required.' });
     }
+
+    // Email content
+    let mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: to,
+        subject: subject,
+        text: text
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.error('Error occurred:', error);
+            res.status(500).json({ error: 'An error occurred while sending the email.' });
+        } else {
+            console.log('Email sent:', info.response);
+            res.status(200).json({ message: 'Email sent successfully.' });
+        }
+    });
 });
 
 // Start the server
