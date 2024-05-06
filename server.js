@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 // CORS middleware
 app.use(cors({
-    origin: ["https://themitchellsplaindrivingschoolassociation.site","null"]
+    origin: ["https://themitchellsplaindrivingschoolassociation.site", null] // Removed quotes around "null"
 }));
 
 // Body parsing middleware
@@ -27,29 +27,24 @@ let transporter = nodemailer.createTransport({
 
 // Route to handle POST request to send email
 app.post('/send-email', (req, res) => {
-    const { to, subject, text } = req.body;
-
-    // Ensure that the 'to' field is not empty
-    if (!to) {
-        return res.status(400).json({ error: 'Recipient email address is required.' });
-    }
+    const { to, subject, text } = req.body; // Assuming your request body contains these fields
 
     // Email content
-    let mailOptions = {
+    const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: to,
-        subject: subject,
-        text: text
+        to,
+        subject,
+        text
     };
 
     // Send the email
-    transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            console.error('Error occurred:', error);
-            res.status(500).json({ error: 'An error occurred while sending the email.' });
+            console.error('Error sending email:', error);
+            res.status(500).json({ error: 'Error sending email' });
         } else {
             console.log('Email sent:', info.response);
-            res.status(200).json({ message: 'Email sent successfully.' });
+            res.status(200).json({ message: 'Email sent successfully' });
         }
     });
 });
