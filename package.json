@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "node server",
-  "main": "server.js",
+  "main": "contactform.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
@@ -18,7 +18,8 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-validator": "^7.0.1",
-    "nodemailer": "^6.9.13"
+    "nodemailer": "^6.9.13",
+    "y": "^0.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.5",
@@ -26,7 +27,3 @@
     "@babel/preset-env": "^7.24.5"
   }
 }
-
-
-  
-
