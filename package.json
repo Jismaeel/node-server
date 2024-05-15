@@ -4,9 +4,10 @@
   "description": "node server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm-run-all --parallel start-server start-membership",
+    "start": "npm-run-all --parallel start-server start-membership start-bookingskylas",
     "start-server": "node src/contactform.js",
     "start-membership": "node src/membershipform.js",
+    "start-bookingskylas": "node src/bookingfordkylas.js",
     "babel": "babel-node server.js"
   },
   "keywords": [],
@@ -23,6 +24,7 @@
     "y": "^0.3.2"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "parallelshell": "^3.0.2"
   }
 }
