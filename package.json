@@ -6,8 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm-run-all --parallel start-server start-membership start-bookingskylas",
     "start-server": "node src/contactform.js",
-    "start-membership": "node src/membershipform.js",
-    "start-bookingskylas": "node src/bookingfordkylas.js",
+    "start-membership": "node src/membership.js",
+    "start-bookingskylas": "node src/bookingformskylas.js",
     "babel": "babel-node server.js"
   },
   "keywords": [],
