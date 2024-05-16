@@ -7,7 +7,7 @@
     "start": "npm-run-all --parallel start-server start-membership start-bookingskylas",
     "start-server": "node src/contactform.js",
     "start-membership": "node src/membership.js",
-    "start-bookingskylas": "node src/bookingformskylas.js",
+    "start-bookingskylas": "node src/bookingskylas.js",
     "babel": "babel-node server.js"
   },
   "keywords": [],
