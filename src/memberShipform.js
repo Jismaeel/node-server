@@ -1,10 +1,4 @@
-// Add these lines at the beginning of your code, before requiring the module
-console.log("Current directory:", __dirname); // Log the current directory
-console.log("Attempting to require module:", __dirname + "/memberShipform.js"); // Log the path to the module
 
-// Require the module
-// Corrected import statement with the right casing
-const membershipForm = require("./memberShipform.js");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
