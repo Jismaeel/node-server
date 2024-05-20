@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
+const router = express.Router();
 
 const app = express();
 const port = 4000;
@@ -19,8 +20,8 @@ app.use(
 );
 
 // Endpoint to handle membership form submission
-app.post("/submit-membership", (req, res) => {
-  const { name, surname, email, school, number, area } = req.body;
+router.post("/submit-membership", (req, res) => {
+  const { name, surname, email, school1, number1, area } = req.body;
 
   // Create a transporter with Gmail SMTP
   const transporter = nodemailer.createTransport({
@@ -41,8 +42,8 @@ app.post("/submit-membership", (req, res) => {
     text: `
       Name: ${name} ${surname}
       Email: ${email}
-      Driving School: ${school}
-      Phone Number: ${number}
+      Driving School: ${school1}
+      Phone Number: ${number1}
       Area: ${area}
     `,
   };
