@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
-const router = express.Router();
 
 const app = express();
 const port = 3000;
@@ -18,7 +17,7 @@ app.use(
   })
 );
 // Endpoint to handle form submission
-router.post("/submit-form", (req, res) => {
+app.post("/submit-form", (req, res) => {
   const { name, email, message } = req.body;
   // Create a transporter with Gmail SMTP
   const transporter = nodemailer.createTransport({

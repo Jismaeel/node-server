@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
-const router = express.Router();
 
 const app = express();
 const PORT = 5000;
@@ -19,7 +18,7 @@ app.use(
 );
 
 // POST route for form submission
-router.post('/submit-bookingsskylas', (req, res) => {
+app.post('/submit-bookingsskylas', (req, res) => {
     const { fullname, contact, email, address, courseOption, packageOption, carHire, selectedDate } = req.body;
 
     // Create a transporter with Gmail SMTP
