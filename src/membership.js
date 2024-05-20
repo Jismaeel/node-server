@@ -19,7 +19,7 @@ app.use(
 );
 
 // Endpoint to handle membership form submission
-app.post("/api/submit-membership-form", (req, res) => {
+app.post("/submit-form", (req, res) => {
   const { name, surname, email, school, number, area } = req.body;
 
   // Create a transporter with Gmail SMTP
