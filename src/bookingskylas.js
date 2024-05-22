@@ -18,7 +18,7 @@ app.use(
 );
 
 // POST route for form submission
-app.post('/submit-bookingsskylas', (req, res) => {
+app.post('/submit-bookingsskylas', async (req, res) => {
     const { fullname, contact, email, address, courseOption, packageOption, carHire, selectedDate } = req.body;
 
     // Create a transporter with Gmail SMTP

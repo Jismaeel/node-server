@@ -17,7 +17,7 @@ app.use(
   })
 );
 // Endpoint to handle form submission
-app.post("/submit-form", (req, res) => {
+app.post("/submit-form", async (req, res) => {
   const { name, email, message } = req.body;
   // Create a transporter with Gmail SMTP
   const transporter = nodemailer.createTransport({
