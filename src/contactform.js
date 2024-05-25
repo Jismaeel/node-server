@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 app.use(
   cors({
     origin: "https://themitchellsplaindrivingschoolassociation.site",
+    methods: ['GET', 'POST'], // Allow these methods
   })
 );
 // Endpoint to handle form submission
