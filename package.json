@@ -4,10 +4,8 @@
   "description": "node server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm-run-all --parallel start-server start-membership start-bookingskylas",
-    "start-server": "node src/contactform.js",
-    "start-membership": "node src/membership.js",
-    "start-bookingskylas": "node src/bookingskylas.js",
+    "start": "node server.js",
+    "main": "server.js",
     "babel": "babel-node server.js"
   },
   "keywords": [],

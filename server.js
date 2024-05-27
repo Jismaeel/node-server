@@ -1,0 +1,145 @@
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const nodemailer = require("nodemailer");
+
+const app = express();
+const port = 4000;
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+
+// CORS configuration
+app.use(
+  cors({
+    origin: "https://themitchellsplaindrivingschoolassociation.site",
+    methods: ['GET', 'POST'], // Allow these methods
+  })
+);
+
+// Endpoint to handle form contact submission
+app.post("/submit-contact", async (req, res) => {
+  const { name, email, message } = req.body;
+
+  // Create a transporter with Outlook SMTP
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.office365.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "mpdsa2024@outlook.com", // Sender's address
+      pass: "Liverpool77#", // Sender's password
+    },
+  });
+
+  // Mail options
+  const mailOptions = {
+    from: "mpdsa2024@outlook.com", // Sender's email address
+    to: "infoatijdesigns@gmail.com", // Recipient's email address
+    subject: "New Message from Contact Form",
+    text: `\nName: ${name} \nEmail: ${email}\nMessage: ${message}`,
+  };
+
+  // Send email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      res.status(500).send('Error sending email');
+    } else {
+      console.log('Email sent:', info.response);
+      res.sendStatus(200); // Send success response to client
+    }
+  });
+});
+
+// Endpoint to handle membership form submission
+app.post("/submit-membership", async (req, res) => {
+  const { name, surname, email, school1, number1, area } = req.body;
+
+  // Create a transporter with Outlook SMTP
+  const transporter = nodemailer.createTransport({
+    host: "smtp.office365.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "mpdsa2024@outlook.com", // Sender's address
+      pass: "Liverpool77#", // Sender's password
+    },
+  });
+
+  // Mail options
+  const mailOptions = {
+    from: "mpdsa2024@outlook.com", // Sender's email address
+    to: "infoatijdesigns@gmail.com", // Recipient's email address
+    subject: "New Membership Application",
+    text: `
+      Name: ${name} ${surname}
+      Email: ${email}
+      Driving School: ${school1}
+      Phone Number: ${number1}
+      Area: ${area}
+    `,
+  };
+
+  // Send email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      res.status(500).send('Error sending email');
+    } else {
+      console.log('Email sent:', info.response);
+      res.sendStatus(200); // Send success response to client
+    }
+  });
+});
+
+// Endpoint to handle bookings form submission
+app.post("/submit-bookings", async (req, res) => {
+  const { fullname, contact, email, address, courseOption, packageOption, carHire, selectedDate } = req.body;
+
+  // Create a transporter with Outlook SMTP
+  const transporter = nodemailer.createTransport({
+    host: "smtp.office365.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "mpdsa2024@outlook.com", // Sender's address
+      pass: "Liverpool77#", // Sender's password
+    },
+  });
+
+  // Construct email message
+  const mailOptions = {
+    from: 'mpdsa2024@outlook.com',
+    to: 'infoatijdesigns@gmail.com', // Change this to the recipient's email address
+    subject: 'New Booking Form Submission',
+    html: `
+      <p><strong>Full Name:</strong> ${fullname}</p>
+      <p><strong>Contact Number:</strong> ${contact}</p>
+      <p><strong>Email Address:</strong> ${email}</p>
+      <p><strong>Address:</strong> ${address}</p>
+      <p><strong>Course Option:</strong> ${courseOption}</p>
+      <p><strong>Package Option:</strong> ${packageOption}</p>
+      <p><strong>Car Hire (North):</strong> ${carHire.north ? 'Yes' : 'No'}</p>
+      <p><strong>Car Hire (South):</strong> ${carHire.south ? 'Yes' : 'No'}</p>
+      <p><strong>Selected Date:</strong> ${selectedDate}</p>
+    `
+  };
+
+  // Send email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      res.status(500).send('Error sending email');
+    } else {
+      console.log('Email sent:', info.response);
+      res.sendStatus(200); // Send success response to client
+    }
+  });
+});
+
+// Start server
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
