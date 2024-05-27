@@ -96,7 +96,7 @@ app.post("/submit-membership", async (req, res) => {
 
 // Endpoint to handle bookings form submission
 app.post("/submit-bookings", async (req, res) => {
-  const { fullname, contact, email, address, courseOption, packageOption, carHire, selectedDate } = req.body;
+  const { name, surname, email, number1, courseOption, packageOption, carHire, selectedDate } = req.body;
 
   // Create a transporter with Outlook SMTP
   const transporter = nodemailer.createTransport({
@@ -115,10 +115,10 @@ app.post("/submit-bookings", async (req, res) => {
     to: 'infoatijdesigns@gmail.com', // Change this to the recipient's email address
     subject: 'New Booking Form Submission',
     html: `
-      <p><strong>Full Name:</strong> ${fullname}</p>
-      <p><strong>Contact Number:</strong> ${contact}</p>
-      <p><strong>Email Address:</strong> ${email}</p>
-      <p><strong>Address:</strong> ${address}</p>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Surname:</strong> ${surname}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Phone Number:</strong> ${number1}</p>
       <p><strong>Course Option:</strong> ${courseOption}</p>
       <p><strong>Package Option:</strong> ${packageOption}</p>
       <p><strong>Car Hire (North):</strong> ${carHire.north ? 'Yes' : 'No'}</p>
@@ -138,7 +138,6 @@ app.post("/submit-bookings", async (req, res) => {
     }
   });
 });
-
 // Start server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
