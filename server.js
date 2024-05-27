@@ -94,8 +94,8 @@ app.post("/submit-membership", async (req, res) => {
   });
 });
 
-// Endpoint to handle bookings form submission
-app.post("/submit-bookings", async (req, res) => {
+// Endpoint to handle skylas bookings form submission
+app.post("/submit-bookingskylas", async (req, res) => {
   const { name, surname, email, number1, courseOption, packageOption, carHire, selectedDate } = req.body;
 
   // Create a transporter with Outlook SMTP
@@ -138,6 +138,7 @@ app.post("/submit-bookings", async (req, res) => {
     }
   });
 });
+
 // Start server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
