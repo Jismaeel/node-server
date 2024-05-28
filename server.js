@@ -4,19 +4,17 @@ const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 
 const app = express();
-const port = 4000;
+const port = 3000;
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // CORS configuration
-app.use(
-  cors({
-    origin: "https://themitchellsplaindrivingschoolassociation.site",
-    methods: ['GET', 'POST'], // Allow these methods
-  })
-);
+app.use(cors({
+  origin: "https://themitchellsplaindrivingschoolassociation.site",
+  methods: ['GET', 'POST'], // Allow these methods
+}));
 
 // Endpoint to handle form contact submission
 app.post("/submit-contact", async (req, res) => {
