@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
-const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 const port = 3000;
@@ -15,15 +14,6 @@ app.use(bodyParser.json());
 app.use(cors({
   origin: "https://themitchellsplaindrivingschoolassociation.site",
   methods: ['GET', 'POST'], // Allow these methods
-}));
-
-// Proxy setup
-app.use('/submit-bookingskylas', createProxyMiddleware({
-  target: 'https://node-server-c9zt.onrender.com',
-  changeOrigin: true,
-  pathRewrite: {
-    '^/submit-bookingskylas': '/submit-bookingskylas',
-  },
 }));
 
 // Endpoint to handle form contact submission
@@ -87,6 +77,50 @@ app.post("/submit-membership", async (req, res) => {
       Driving School: ${school1}
       Phone Number: ${number1}
       Area: ${area}
+    `,
+  };
+
+  // Send email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      res.status(500).send('Error sending email');
+    } else {
+      console.log('Email sent:', info.response);
+      res.sendStatus(200); // Send success response to client
+    }
+  });
+});
+
+// Endpoint to handle Skylas bookings form submission
+app.post("/submit-bookingskylas", async (req, res) => {
+  const { name, surname, email, number1, courseOption, packageOption, carHire, selectedDate } = req.body;
+
+  // Create a transporter with Outlook SMTP
+  const transporter = nodemailer.createTransport({
+    host: "smtp.office365.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "mpdsa2024@outlook.com", // Sender's address
+      pass: "Liverpool77#", // Sender's password
+    },
+  });
+
+  // Construct email message
+  const mailOptions = {
+    from: "mpdsa2024@outlook.com", // Sender's email address
+    to: "infoatijdesigns@gmail.com", // Recipient's email address
+    subject: "New Booking Form Submission",
+    text: `
+      Name: ${name} ${surname}
+      Email: ${email}
+      Phone Number: ${number1}
+      Course Option: ${courseOption}
+      Package Option: ${packageOption}
+      Car Hire (North): ${carHire.north ? 'Yes' : 'No'}
+      Car Hire (South): ${carHire.south ? 'Yes' : 'No'}
+      Selected Date: ${selectedDate}
     `,
   };
 
