@@ -94,7 +94,7 @@ app.post("/submit-membership", async (req, res) => {
   });
 });
 
-// Endpoint to handle skylas bookings form submission
+// Endpoint to handle Skylas bookings form submission
 app.post("/submit-bookingskylas", async (req, res) => {
   const { name, surname, email, number1, courseOption, packageOption, carHire, selectedDate } = req.body;
 
@@ -111,20 +111,19 @@ app.post("/submit-bookingskylas", async (req, res) => {
 
   // Construct email message
   const mailOptions = {
-    from: 'mpdsa2024@outlook.com',
-    to: 'infoatijdesigns@gmail.com', // Change this to the recipient's email address
-    subject: 'New Booking Form Submission',
-    html: `
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Surname:</strong> ${surname}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone Number:</strong> ${number1}</p>
-      <p><strong>Course Option:</strong> ${courseOption}</p>
-      <p><strong>Package Option:</strong> ${packageOption}</p>
-      <p><strong>Car Hire (North):</strong> ${carHire.north ? 'Yes' : 'No'}</p>
-      <p><strong>Car Hire (South):</strong> ${carHire.south ? 'Yes' : 'No'}</p>
-      <p><strong>Selected Date:</strong> ${selectedDate}</p>
-    `
+    from: "mpdsa2024@outlook.com", // Sender's email address
+    to: "infoatijdesigns@gmail.com", // Recipient's email address
+    subject: "New Booking Form Submission",
+    text: `
+      Name: ${name} ${surname}
+      Email: ${email}
+      Phone Number: ${number1}
+      Course Option: ${courseOption}
+      Package Option: ${packageOption}
+      Car Hire (North): ${carHire.north ? 'Yes' : 'No'}
+      Car Hire (South): ${carHire.south ? 'Yes' : 'No'}
+      Selected Date: ${selectedDate}
+    `,
   };
 
   // Send email
