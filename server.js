@@ -94,7 +94,7 @@ app.post("/submit-membership", async (req, res) => {
 
 // Endpoint to handle Skylas bookings form submission
 app.post("/submit-bookingskylas", async (req, res) => {
-  const { name, surname, email, number1, courseOption, packageOption, carHire, date } = req.body;
+  const { name, surname, email, number1, courseOption, packageOption, carHire, selectdate } = req.body;
 
   // Create a transporter with Outlook SMTP
   const transporter = nodemailer.createTransport({
@@ -120,7 +120,7 @@ app.post("/submit-bookingskylas", async (req, res) => {
       Package Option: ${packageOption}
       Car Hire (North): ${carHire.north ? 'Yes' : 'No'}
       Car Hire (South): ${carHire.south ? 'Yes' : 'No'}
-      Selected Date: ${date}
+      Selected Date: ${selectdate}
     `,
   };
 
