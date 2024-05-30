@@ -117,10 +117,10 @@ app.post("/submit-bookingskylas", async (req, res) => {
       Email: ${email}
       Phone Number: ${number1}
       Course Option: ${courseOption}
-      Package Option: ${data.packageOption}
+      Package Option: ${packageOption}
       Car Hire (North): ${carHire.north ? 'Yes' : 'No'}
       Car Hire (South): ${carHire.south ? 'Yes' : 'No'}
-      Selected Date: ${data.selectedDate}
+      Selected Date: ${selectedDate}
     `,
   };
 
