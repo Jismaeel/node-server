@@ -93,33 +93,29 @@ app.post("/submit-membership", async (req, res) => {
 });
 
 // Endpoint to handle Skylas bookings form submission
-app.post("/submit-bookingskylas", async (req, res) => {
-  const { name, surname, email, number1, courseOption, packageOption, carHire, selectdate } = req.body;
+// Endpoint to handle Skylas bookings form submission
+app.post("/submit-bookingskylas", (req, res) => {
+  const { name, surname, email, number1, transmission, courseOption, packageOption, carHire, selectdate } = req.body;
 
-  // Create a transporter with Outlook SMTP
-  const transporter = nodemailer.createTransport({
-    host: "smtp.office365.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: "mpdsa2024@outlook.com", // Sender's address
-      pass: "Liverpool77#", // Sender's password
-    },
-  });
+  // Construct the car hire options text
+  const carHireText = Object.keys(carHire).map(key => {
+    return `${key.charAt(0).toUpperCase() + key.slice(1)}: ${carHire[key] ? 'Yes' : 'No'}`;
+  }).join('\n');
 
-  // Construct email message
+  // Mail options
   const mailOptions = {
-    from: "mpdsa2024@outlook.com", // Sender's email address
-    to: "infoatijdesigns@gmail.com", // Recipient's email address
+    from: process.env.EMAIL_USER,
+    to: "infoatijdesigns@gmail.com",
     subject: "New Booking Form Submission",
     text: `
       Name: ${name} ${surname}
       Email: ${email}
       Phone Number: ${number1}
+      Transmission: ${transmission}
       Course Option: ${courseOption}
       Package Option: ${packageOption}
-      Car Hire (North): ${carHire.north ? 'Yes' : 'No'}
-      Car Hire (South): ${carHire.south ? 'Yes' : 'No'}
+      Car Hire:
+      ${carHireText}
       Selected Date: ${selectdate}
     `,
   };
