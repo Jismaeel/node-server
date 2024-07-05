@@ -18,7 +18,7 @@ app.use(cors({
 
 // Endpoint to handle form contact submission
 app.post("/submit-contact", async (req, res) => {
-  const { name, email, message } = req.body;
+  const { firstname, email, message } = req.body;
 
   // Create a transporter with Outlook SMTP
   const transporter = nodemailer.createTransport({
@@ -36,7 +36,7 @@ app.post("/submit-contact", async (req, res) => {
     from: "mpdsa2024@outlook.com", // Sender's email address
     to: "infoatijdesigns@gmail.com", // Recipient's email address
     subject: "New Message from Contact Form",
-    text: `\nName: ${name} \nEmail: ${email}\nMessage: ${message}`,
+    text: `\nName: ${firstname} \nEmail: ${email}\nMessage: ${message}`,
   };
 
   // Send email
