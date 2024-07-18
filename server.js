@@ -4,17 +4,24 @@ const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 
 const app = express();
-const port = 3000;
+const port = 1010;
 
 // Middleware
-app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 app.use(bodyParser.json());
 
 // CORS configuration
-app.use(cors({
-  origin: "https://themitchellsplaindrivingschoolassociation.site",
-  methods: ['GET', 'POST'], // Allow these methods
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    optionsSuccessStatus: 200,
+    methods: ["GET", "POST"], // Allow these methods
+  })
+);
 
 // Endpoint to handle form contact submission
 app.post("/submit-contact", async (req, res) => {
@@ -53,7 +60,15 @@ app.post("/submit-contact", async (req, res) => {
 
 // Endpoint to handle membership form submission
 app.post("/submit-membership", async (req, res) => {
-  const { name, surname, email, school1, number1, area } = req.body;
+  const {
+    firstname,
+    surname,
+    email,
+    drivingschool,
+    phonenumber,
+    area,
+    termsAccepted,
+  } = req.body;
 
   // Create a transporter with Outlook SMTP
   const transporter = nodemailer.createTransport({
@@ -72,11 +87,12 @@ app.post("/submit-membership", async (req, res) => {
     to: "infoatijdesigns@gmail.com", // Recipient's email address
     subject: "New Membership Application",
     text: `
-      Name: ${name} ${surname}
+      Name: ${firstname} ${surname}
       Email: ${email}
-      Driving School: ${school1}
-      Phone Number: ${number1}
+      Driving School: ${drivingschool}
+      Phone Number: ${phonenumber}
       Area: ${area}
+      Terms: ${termsAccepted}
     `,
   };
 
