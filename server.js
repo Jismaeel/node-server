@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 // CORS configuration
 app.use(
   cors({
-    origin: "mpdsa.online",
+    origin: "https://mpdsa.online",
     optionsSuccessStatus: 200,
     methods: ["GET", "POST"], // Allow these methods
   })
