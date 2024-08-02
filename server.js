@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 // CORS configuration
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "mpdsa.online",
     optionsSuccessStatus: 200,
     methods: ["GET", "POST"], // Allow these methods
   })
@@ -108,45 +108,58 @@ app.post("/submit-membership", async (req, res) => {
   });
 });
 
-// Endpoint to handle Skylas bookings form submission
-// Endpoint to handle Skylas bookings form submission
-app.post("/submit-bookingskylas", (req, res) => {
-  const { name, surname, email, number1, transmission, courseOption, packageOption, carHire, selectdate } = req.body;
 
-  // Construct the car hire options text
-  const carHireText = Object.keys(carHire).map(key => {
-    return `${key.charAt(0).toUpperCase() + key.slice(1)}: ${carHire[key] ? 'Yes' : 'No'}`;
-  }).join('\n');
+app.post("/submit-bookingskylas", (req, res) => {
+  const {
+    firstname,
+    surname,
+    email,
+    phonenumber,
+    transmission,
+    courseOption,
+    packageOption,
+    carHire,
+  } = req.body;
+
+  // Create a transporter with Outlook SMTP
+  const transporter = nodemailer.createTransport({
+    host: "smtp.office365.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "mpdsa2024@outlook.com", // Sender's address
+      pass: "Liverpool77#", // Sender's password
+    },
+  });
 
   // Mail options
   const mailOptions = {
-    from: process.env.EMAIL_USER,
+    from: "mpdsa2024@outlook.com",
     to: "infoatijdesigns@gmail.com",
     subject: "New Booking Form Submission",
     text: `
-      Name: ${name} ${surname}
+      Name: ${firstname} ${surname}
       Email: ${email}
-      Phone Number: ${number1}
+      Phone Number: ${phonenumber}
       Transmission: ${transmission}
       Course Option: ${courseOption}
       Package Option: ${packageOption}
-      Car Hire:
-      ${carHireText}
-      Selected Date: ${selectdate}
+      Car Hire: ${carHire}
     `,
   };
 
   // Send email
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.error('Error sending email:', error);
-      res.status(500).send('Error sending email');
+      console.error("Error sending email:", error);
+      res.status(500).send("Error sending email");
     } else {
-      console.log('Email sent:', info.response);
+      console.log("Email sent:", info.response);
       res.sendStatus(200); // Send success response to client
     }
   });
 });
+
 
 // Start server
 app.listen(port, () => {
