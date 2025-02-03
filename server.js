@@ -33,7 +33,7 @@ app.post("/submit-contact", async (req, res) => {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "DummyE2211", // Sender's address
+      user: "DummyE2211@outlook.com", // Sender's address
       pass: "Liverpool77#", // Sender's password
     },
   });
