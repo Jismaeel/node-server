@@ -40,7 +40,7 @@ app.post("/submit-contact", async (req, res) => {
 
   // Mail options
   const mailOptions = {
-    from: "mpdsa2024@outlook.com", // Sender's email address
+    from: "DummyE221@outlook.com", // Sender's email address
     to: "infoatijdesigns@gmail.com", // Recipient's email address
     subject: "New Message from Contact Form",
     text: `\nName: ${firstname} \nEmail: ${email}\nMessage: ${message}`,
@@ -76,14 +76,14 @@ app.post("/submit-membership", async (req, res) => {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "mpdsa2024@outlook.com", // Sender's address
+      user: "DummyE221@outlook.com", // Sender's address
       pass: "Liverpool77#", // Sender's password
     },
   });
 
   // Mail options
   const mailOptions = {
-    from: "mpdsa2024@outlook.com", // Sender's email address
+    from: "DummyE221@outlook.com", // Sender's email address
     to: "infoatijdesigns@gmail.com", // Recipient's email address
     subject: "New Membership Application",
     text: `
@@ -107,59 +107,6 @@ app.post("/submit-membership", async (req, res) => {
     }
   });
 });
-
-
-app.post("/submit-bookingskylas", (req, res) => {
-  const {
-    firstname,
-    surname,
-    email,
-    phonenumber,
-    transmission,
-    courseOption,
-    packageOption,
-    carHire,
-  } = req.body;
-
-  // Create a transporter with Outlook SMTP
-  const transporter = nodemailer.createTransport({
-    host: "smtp.office365.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: "mpdsa2024@outlook.com", // Sender's address
-      pass: "Liverpool77#", // Sender's password
-    },
-  });
-
-  // Mail options
-  const mailOptions = {
-    from: "mpdsa2024@outlook.com",
-    to: "infoatijdesigns@gmail.com",
-    subject: "New Booking Form Submission",
-    text: `
-      Name: ${firstname} ${surname}
-      Email: ${email}
-      Phone Number: ${phonenumber}
-      Transmission: ${transmission}
-      Course Option: ${courseOption}
-      Package Option: ${packageOption}
-      Car Hire: ${carHire}
-    `,
-  };
-
-  // Send email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error("Error sending email:", error);
-      res.status(500).send("Error sending email");
-    } else {
-      console.log("Email sent:", info.response);
-      res.sendStatus(200); // Send success response to client
-    }
-  });
-});
-
 
 // Start server
 app.listen(port, () => {
